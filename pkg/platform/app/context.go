@@ -2,8 +2,7 @@ package app
 
 import (
 	"context"
-	"github.com/sagikazarmark/kitx/correlation"
-	kitxendpoint "github.com/sagikazarmark/kitx/endpoint"
+	"github.com/xdimedrolx/moly/pkg/platform/correlation"
 	"go.opencensus.io/trace"
 )
 
@@ -13,10 +12,6 @@ func ContextExtractor(ctx context.Context) map[string]interface{} {
 
 	if correlationID, ok := correlation.FromContext(ctx); ok {
 		fields["correlation_id"] = correlationID
-	}
-
-	if operationName, ok := kitxendpoint.OperationName(ctx); ok {
-		fields["operation_name"] = operationName
 	}
 
 	if span := trace.FromContext(ctx); span != nil {

@@ -1,5 +1,5 @@
 # Build image
-FROM golang:1.14-alpine3.11 AS builder
+FROM golang:1.17.2-alpine3.14 AS builder
 
 ENV GOFLAGS="-mod=readonly"
 
@@ -33,7 +33,7 @@ RUN set -xe && \
 
 
 # Final image
-FROM alpine:3.11
+FROM alpine:3.14
 
 RUN apk add --update --no-cache ca-certificates tzdata bash curl
 
@@ -49,5 +49,4 @@ RUN if [[ "${BUILD_TARGET}" == "debug" ]]; then apk add --update --no-cache libc
 
 COPY --from=builder /build/* /usr/local/bin/
 
-EXPOSE 8000 8001 10000
-CMD ["inbox", "--telemetry-addr", ":10000", "--http-addr", ":8000", "--grpc-addr", ":8001"]
+CMD ["app"]

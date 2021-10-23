@@ -1,7 +1,6 @@
 package app
 
 import (
-	"fmt"
 	"github.com/xdimedrolx/moly/internal/app/application/use_case"
 	"github.com/xdimedrolx/moly/internal/app/config"
 	routes "github.com/xdimedrolx/moly/internal/app/interface/http"
@@ -58,7 +57,7 @@ func initializeHttpServer(logger log.Logger, routes *routes.RouteHandlers) *http
 }
 
 func (a *App) Dispose() {
-	fmt.Println("DISPOSE")
+	a.logger.Info("disposing...")
 }
 
 func (a *App) Logger() log.Logger {

@@ -19,13 +19,13 @@ func NewServerWithLogger(logger log.Logger) *Server {
 	e.Logger = logAdapter.NewLogurAdapter(logger)
 
 	s := &Server{Echo: e, logger: logger}
-
-	e.Use(echoMiddleware.RequestID())
-	e.Use(echoMiddleware.Recover())
-	e.Use(echoMiddleware.Logger())
-
 	AddValidator(s)
+
+	e.Pre(echoMiddleware.RemoveTrailingSlash())
+	e.Use(middleware.RequestID())
+	e.Use(echoMiddleware.Logger())
 	e.Use(middleware.Validator)
+	e.Use(echoMiddleware.Recover())
 
 	return s
 }
