@@ -1,0 +1,58 @@
+definitions:
+  echo.HTTPError:
+    properties:
+      message: {}
+    type: object
+  useCase.EchoRequest:
+    properties:
+      message:
+        type: string
+    type: object
+  useCase.EchoResponse:
+    properties:
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+  title: Server API
+  version: "1.0"
+paths:
+  /webhook/echo:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: dto
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/useCase.EchoRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/useCase.EchoResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+      summary: Echo
+      tags:
+      - webhook
+swagger: "2.0"
